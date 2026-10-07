@@ -1,0 +1,217 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Main from "@/components/Main.astro";
+import { dailyPlan, type ScheduleBlock } from "@/data/schedule";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+
+// "08:00" for a point in time, "08:30–10:00" for a range.
+const timeLabel = (block: Pick<ScheduleBlock, "start" | "end">) =>
+  block.end ? `${block.start}–${block.end}` : block.start;
+---
+
+<Layout
+  title={`${t.pages.scheduleTitle} | ${config.site.title}`}
+  description={t.pages.scheduleDesc}
+  breadcrumb
+>
+  <Main pageTitle={t.pages.scheduleTitle} pageDesc={t.pages.scheduleDesc}>
+    <div id="schedule-page">
+      {
+        dailyPlan.length === 0 ? (
+          <p class="schedule-empty">{t.schedule.empty}</p>
+        ) : (
+          <ol class="schedule-list">
+            {dailyPlan.map(block => (
+              <li class="schedule-block">
+                <span class="schedule-time">{timeLabel(block)}</span>
+
+                <div class="schedule-content">
+                  <p class="schedule-label">{block.label}</p>
+
+                  {block.items && (
+                    <ul class="schedule-sub">
+                      {block.items.map(item => (
+                        <li>
+                          <span class="schedule-sub-time">
+                            {timeLabel(item)}
+                          </span>
+                          <span class="schedule-sub-label">{item.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </div>
+  </Main>
+</Layout>
+
+<!--
+  Global, not scoped, so the rules survive any future markup swapped in by a
+  client script. Everything is namespaced under #schedule-page, which only this
+  page renders.
+-->
+<style is:global>
+  #schedule-page {
+    --schedule-time-col: 7rem;
+    --schedule-rail-gap: 1.75rem;
+    --schedule-node-top: 1.5rem;
+  }
+
+  #schedule-page .schedule-list {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Vertical rail running through the gutter, from the first node to the last. */
+  #schedule-page .schedule-list::before {
+    content: "";
+    position: absolute;
+    top: var(--schedule-node-top);
+    bottom: var(--schedule-node-top);
+    left: calc(var(--schedule-time-col) + var(--schedule-rail-gap) / 2);
+    width: 1.5px;
+    transform: translateX(-50%);
+    background: var(--border);
+  }
+
+  #schedule-page .schedule-block {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--schedule-time-col) minmax(0, 1fr);
+    column-gap: var(--schedule-rail-gap);
+    padding-block: 0.8rem;
+  }
+
+  /* Node sits on the rail, level with the block's first line. The ring painted
+     in the page background makes it punch a clean gap through the rail. */
+  #schedule-page .schedule-block::before {
+    content: "";
+    position: absolute;
+    top: var(--schedule-node-top);
+    left: calc(var(--schedule-time-col) + var(--schedule-rail-gap) / 2);
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--muted-foreground);
+    box-shadow: 0 0 0 4px var(--background);
+    transform: translate(-50%, -50%);
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  #schedule-page .schedule-block:hover::before {
+    background: var(--foreground);
+    transform: translate(-50%, -50%) scale(1.35);
+  }
+
+  #schedule-page .schedule-time {
+    padding-top: 0.1rem;
+    color: var(--muted-foreground);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+    text-align: right;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  #schedule-page .schedule-block:hover .schedule-time {
+    color: var(--foreground);
+  }
+
+  #schedule-page .schedule-label {
+    margin: 0;
+    color: var(--foreground);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  /* Nested breakdown of a longer block. */
+  #schedule-page .schedule-sub {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0.55rem 0 0.15rem;
+    padding: 0.6rem 0.85rem;
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    background: color-mix(in srgb, var(--muted) 42%, transparent);
+  }
+
+  #schedule-page .schedule-sub li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  #schedule-page .schedule-sub-time {
+    flex: none;
+    color: var(--muted-foreground);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  #schedule-page .schedule-sub-label {
+    color: var(--foreground);
+  }
+
+  #schedule-page .schedule-empty {
+    margin-block: 3rem;
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 639px) {
+    #schedule-page {
+      --schedule-time-col: 5.25rem;
+      --schedule-rail-gap: 1.15rem;
+      --schedule-node-top: 1.3rem;
+    }
+
+    #schedule-page .schedule-block {
+      padding-block: 0.7rem;
+    }
+
+    #schedule-page .schedule-time {
+      font-size: 0.75rem;
+    }
+
+    #schedule-page .schedule-label {
+      font-size: 0.9rem;
+    }
+
+    #schedule-page .schedule-sub {
+      padding: 0.5rem 0.65rem;
+    }
+
+    #schedule-page .schedule-sub li {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #schedule-page .schedule-block::before,
+    #schedule-page .schedule-time {
+      transition: none;
+    }
+  }
+</style>

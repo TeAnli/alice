@@ -9,6 +9,7 @@ export interface UIStrings {
     search: string;
     links: string;
     moments: string;
+    schedule: string;
     menu: string;
     theme: string;
   };
@@ -107,6 +108,9 @@ export interface UIStrings {
     notConfigured: string;
     aria: string;
   };
+  schedule: {
+    empty: string;
+  };
   footer: {
     copyright: string;
     allRightsReserved: string;
@@ -141,6 +145,9 @@ export interface UIStrings {
 
     momentsTitle: string;
     momentsDesc: string;
+
+    scheduleTitle: string;
+    scheduleDesc: string;
   };
   a11y: {
     skipToContent: string;

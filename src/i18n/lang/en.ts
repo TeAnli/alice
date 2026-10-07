@@ -11,6 +11,7 @@ export default {
     search: "Search",
     links: "Links",
     moments: "Moments",
+    schedule: "Schedule",
     menu: "Menu",
     theme: "Theme",
   },
@@ -112,6 +113,9 @@ export default {
     notConfigured: "The moments API is not configured yet.",
     aria: "Moments feed",
   },
+  schedule: {
+    empty: "Nothing planned yet.",
+  },
   footer: {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
@@ -146,6 +150,9 @@ export default {
 
     momentsTitle: "Moments",
     momentsDesc: "Little fragments of life, written down as they come.",
+
+    scheduleTitle: "Daily Plan",
+    scheduleDesc: "How I usually spend a day, roughly in this rhythm.",
   },
   a11y: {
     skipToContent: "Skip to content",

@@ -11,6 +11,7 @@ export default {
     search: "搜索",
     links: "友链",
     moments: "动态",
+    schedule: "日程",
     menu: "菜单",
     theme: "主题",
   },
@@ -110,6 +111,9 @@ export default {
     notConfigured: "尚未配置动态服务地址。",
     aria: "动态列表",
   },
+  schedule: {
+    empty: "还没有规划内容。",
+  },
   footer: {
     copyright: "版权所有",
     allRightsReserved: "保留所有权利。",
@@ -144,6 +148,9 @@ export default {
 
     momentsTitle: "动态",
     momentsDesc: "记录生活的碎片，想到什么就写什么。",
+
+    scheduleTitle: "每日规划",
+    scheduleDesc: "我的一天，大致按这个节奏走。",
   },
   a11y: {
     skipToContent: "跳转到内容",

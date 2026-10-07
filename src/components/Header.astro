@@ -10,6 +10,7 @@ import IconHash from "@/assets/icons/IconHash.svg";
 import IconUser from "@/assets/icons/IconUser.svg";
 import IconLink from "@/assets/icons/IconLink.svg";
 import IconEdit from "@/assets/icons/IconEdit.svg";
+import IconCalendar from "@/assets/icons/IconCalendar.svg";
 import IconX from "@/assets/icons/IconX.svg";
 import IconChevronDown from "@/assets/icons/IconChevronDown.svg";
 import Logo from "@/assets/icons/Logo.svg";
@@ -248,6 +249,17 @@ const islandCountdownText = islandHasCountdown
                 )
               }
             </ul>
+          </li>
+          <li>
+            <a
+              href={getRelativeLocaleUrl(locale, "schedule")}
+              class:list={[navItem]}
+              data-nav-path="/schedule"
+              data-active={isActive("/schedule") ? "true" : "false"}
+            >
+              <IconCalendar class="nav-icon size-4" aria-hidden="true" />
+              {t.nav.schedule}
+            </a>
           </li>
           <li>
             <a
@@ -538,6 +550,18 @@ const islandCountdownText = islandHasCountdown
             )
           }
         </ul>
+      </li>
+      <li>
+        <a
+          href={getRelativeLocaleUrl(locale, "schedule")}
+          class:list={[
+            "hover:text-foreground block rounded-md px-4 py-2.5 font-medium transition-colors",
+            { "active-nav": isActive("/schedule") },
+          ]}
+          data-nav-path="/schedule"
+        >
+          {t.nav.schedule}
+        </a>
       </li>
       <li>
         <a
