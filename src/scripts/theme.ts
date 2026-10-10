@@ -122,14 +122,14 @@ function toggleThemeWithReveal(event: Event, btn: HTMLElement): void {
 
 function setup(): void {
   reflect();
-  // There are two toggles: the icon button in the header's right island
-  // (desktop) and the labelled row inside the mobile drawer.
+  // Toggles: the floating bottom-right button in the header, plus the reading
+  // page's own control. Every one carries [data-theme-toggle].
   //
-  // Both live inside the persisted header (transition:persist), so they are
-  // NOT replaced across View Transitions — guard per element against
-  // re-adding the click listener on every astro:after-swap. Binding both is
-  // safe precisely because the guard is per element: without it, a shared
-  // marker would leave the second button dead.
+  // The header's lives inside the persisted header (transition:persist), so it
+  // is NOT replaced across View Transitions — guard per element against
+  // re-adding the click listener on every astro:after-swap. The guard is per
+  // element, not a shared marker, because that would leave the second button
+  // dead.
   document.querySelectorAll<HTMLElement>("[data-theme-toggle]").forEach(btn => {
     if (btn.dataset.themeBound === "true") return;
     btn.dataset.themeBound = "true";

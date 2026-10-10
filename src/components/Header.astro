@@ -66,11 +66,9 @@ const groupNavPaths = groupPaths.join(",");
 const isGroupActive = groupPaths.some(isActive);
 
 const navItem =
-  "nav-item relative z-10 flex items-center gap-1.5 rounded-md px-3.5 py-2 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap transition-[color,transform,background-color] duration-200 active:scale-[0.96]";
-const navIconLink =
-  "relative grid size-9 place-items-center rounded-md transition-all duration-200 hover:bg-muted hover:text-foreground active:scale-95 max-sm:size-10";
+  "nav-item relative z-10 flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[13px] leading-none font-semibold tracking-[0.02em] whitespace-nowrap transition-[color,transform,background-color] duration-200 active:scale-[0.96]";
 const island =
-  "surface-panel animate-header-in pointer-events-auto flex h-14 flex-none items-center rounded-xl";
+  "surface-panel animate-header-in pointer-events-auto flex h-14 flex-none items-center rounded-full";
 
 // --- Dynamic island ---------------------------------------------------------
 // Gated on hero.enabled: every value and string it shows is hero-derived, so
@@ -137,7 +135,7 @@ const islandCountdownText = islandHasCountdown
            logo would otherwise sit pointlessly next to the hamburger. -->
       <a
         href={getRelativeLocaleUrl(locale, "")}
-        class="focus-outline text-foreground hover:text-foreground/70 group relative z-10 grid size-11 flex-none place-items-center rounded-lg transition-colors duration-200 max-sm:hidden"
+        class="focus-outline text-foreground hover:text-foreground/70 group relative z-10 grid size-11 flex-none place-items-center rounded-full transition-colors duration-200 max-sm:hidden"
         aria-label={site.title}
       >
         <Logo
@@ -155,7 +153,7 @@ const islandCountdownText = islandHasCountdown
           <!-- Sliding dark indicator behind the active nav item -->
           <span
             aria-hidden="true"
-            class="absolute inset-y-0 left-0 z-0 rounded-md opacity-0"
+            class="absolute inset-y-0 left-0 z-0 rounded-full opacity-0"
             id="nav-indicator"
           >
           </span>
@@ -194,12 +192,12 @@ const islandCountdownText = islandHasCountdown
             <ul
               id="nav-submenu-content"
               data-nav-submenu
-              class="surface-panel absolute z-30 hidden flex-col gap-0.5 rounded-lg p-1.5 shadow-lg"
+              class="surface-panel absolute z-30 hidden flex-col gap-0.5 rounded-2xl p-1.5 shadow-lg"
             >
               <li>
                 <a
                   href={getRelativeLocaleUrl(locale, "posts")}
-                  class="hover:bg-muted flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+                  class="hover:bg-muted flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
                   data-nav-path="/posts"
                   aria-current={isActive("/posts") ? "page" : undefined}
                 >
@@ -210,7 +208,7 @@ const islandCountdownText = islandHasCountdown
               <li>
                 <a
                   href={getRelativeLocaleUrl(locale, "tags")}
-                  class="hover:bg-muted flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+                  class="hover:bg-muted flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
                   data-nav-path="/tags"
                   aria-current={isActive("/tags") ? "page" : undefined}
                 >
@@ -223,7 +221,7 @@ const islandCountdownText = islandHasCountdown
                   <li>
                     <a
                       href={getRelativeLocaleUrl(locale, "archives")}
-                      class="hover:bg-muted flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+                      class="hover:bg-muted flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
                       data-nav-path="/archives"
                       aria-current={isActive("/archives") ? "page" : undefined}
                     >
@@ -238,7 +236,7 @@ const islandCountdownText = islandHasCountdown
                   <li>
                     <a
                       href={getRelativeLocaleUrl(locale, "moments")}
-                      class="hover:bg-muted flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
+                      class="hover:bg-muted flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors"
                       data-nav-path="/moments"
                       aria-current={isActive("/moments") ? "page" : undefined}
                     >
@@ -289,7 +287,7 @@ const islandCountdownText = islandHasCountdown
       <!-- Mobile menu button (only visible nav control on small screens) -->
       <button
         id="menu-btn"
-        class="focus-outline hover:bg-muted relative z-10 grid size-10 place-items-center rounded-lg transition-colors duration-200 sm:hidden"
+        class="focus-outline hover:bg-muted relative z-10 grid size-10 place-items-center rounded-full transition-colors duration-200 sm:hidden"
         aria-label={t.a11y.openMenu}
         aria-expanded="false"
         aria-haspopup="dialog"
@@ -301,26 +299,6 @@ const islandCountdownText = islandHasCountdown
         <IconMenuDeep id="menu-icon" />
       </button>
     </div>
-
-    <!-- Right island: utilities. Hidden on mobile — the theme toggle moves into
-         the drawer, and this would otherwise be an empty pill. -->
-    {
-      features.lightAndDarkMode && (
-        <div class:list={[island, "h-14 gap-1 px-2.5 max-sm:hidden"]}>
-          <button
-            id="theme-btn"
-            data-theme-toggle
-            class:list={[navIconLink]}
-            title={t.a11y.toggleTheme}
-            aria-label={t.a11y.themeAuto}
-            aria-live="polite"
-          >
-            <IconMoon class="absolute top-1/2 left-1/2 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-            <IconSunHigh class="absolute top-1/2 left-1/2 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          </button>
-        </div>
-      )
-    }
 
     <!-- Dynamic island: a live clock + festival countdown that MORPHS IN PLACE
          into a wider capsule of site stats. The component itself changes size
@@ -428,6 +406,33 @@ const islandCountdownText = islandHasCountdown
       )
     }
   </div>
+
+  <!-- Theme toggle: floats bare at the bottom-right. No border and no surface —
+       the glyph itself is the whole control, so a drop-shadow halo (below)
+       keeps it legible where it overlaps page content.
+       A sibling of .header-shell, not a child: the shell transitions
+       `transform`, and a transformed ancestor would become the containing
+       block for position:fixed, dragging the button into the pill.
+       #site-header has no transform, so `fixed` resolves against the viewport.
+       z-20 sits under the z-30 drawer backdrop, so an open drawer covers it —
+       and pointer-events-auto is required because the header is
+       pointer-events-none and the property is inherited. -->
+  {
+    features.lightAndDarkMode && (
+      <button
+        id="theme-btn"
+        type="button"
+        data-theme-toggle
+        class="theme-toggle focus-outline pointer-events-auto fixed inset-e-5 bottom-6 z-20 grid size-11 place-items-center rounded-full transition-transform duration-200 hover:scale-110 active:scale-95"
+        title={t.a11y.toggleTheme}
+        aria-label={t.a11y.themeAuto}
+        aria-live="polite"
+      >
+        <IconMoon class="absolute top-1/2 left-1/2 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+        <IconSunHigh class="absolute top-1/2 left-1/2 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+      </button>
+    )
+  }
 
   <!-- Mobile drawer: slides in from the inline-start edge.
        Both nodes are siblings of .header-shell, never children of it: the shell
@@ -588,36 +593,23 @@ const islandCountdownText = islandHasCountdown
         </a>
       </li>
     </ul>
-
-    <!-- Theme toggle, moved out of the header's right island on mobile.
-         The sun/moon swap is pure CSS (dark: variant classes) — no JS. -->
-    {
-      features.lightAndDarkMode && (
-        <button
-          id="drawer-theme-btn"
-          type="button"
-          data-theme-toggle
-          class="focus-outline hover:bg-muted mt-auto flex w-full items-center justify-between gap-2 rounded-md px-4 py-3 text-start font-medium transition-colors"
-          aria-label={t.a11y.toggleTheme}
-        >
-          <span>{t.nav.theme}</span>
-          <span class="relative grid size-5 flex-none place-items-center">
-            <IconMoon
-              class="absolute top-1/2 left-1/2 translate-[-50%] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
-              aria-hidden="true"
-            />
-            <IconSunHigh
-              class="absolute top-1/2 left-1/2 translate-[-50%] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
-              aria-hidden="true"
-            />
-          </span>
-        </button>
-      )
-    }
   </div>
 </header>
 
 <style>
+  /* Floating theme toggle: a bare glyph with no border or surface. The halo is
+     a drop-shadow of the page background colour, so it reads as a cutout that
+     lifts the stroke off whatever page content sits underneath. */
+  .theme-toggle {
+    color: var(--muted-foreground);
+    filter: drop-shadow(0 0 3px var(--background))
+      drop-shadow(0 1px 1px var(--background));
+  }
+
+  .theme-toggle:hover {
+    color: var(--foreground);
+  }
+
   /* Sliding indicator: a dark pill gliding between nav items.
      Position/width are set from JS (transform + width).
      Colors are declared here (not via utility classes) so the inverted
@@ -636,6 +628,14 @@ const islandCountdownText = islandHasCountdown
   /* Inverted text while the dark indicator sits behind a nav item. */
   .nav-item.nav-inverted {
     color: var(--background);
+  }
+
+  /* Hover affordance for the idle items. Keyed off .nav-inverted, not
+     [data-active], because the indicator also parks on a group button while its
+     submenu is open — a data-active guard would let the muted wash bleed over
+     the pill in that state. */
+  .nav-item:not(.nav-inverted):hover {
+    background: color-mix(in srgb, var(--muted) 70%, transparent);
   }
 
   /* Click feedback: icon squashes while the item is pressed. */
