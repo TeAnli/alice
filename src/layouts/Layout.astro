@@ -15,6 +15,8 @@ type Props = {
   breadcrumb?: boolean;
   /** Keeps the global footer optional for immersive reading layouts. */
   showFooter?: boolean;
+  /** Hides the floating header for immersive reading layouts (article pages). */
+  showHeader?: boolean;
 };
 
 const { site } = config;
@@ -25,6 +27,7 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   breadcrumb = false,
   showFooter = true,
+  showHeader = true,
 } = Astro.props;
 
 // rss.xml is a fixed file route, not a directory route — the locale helper
@@ -149,7 +152,7 @@ const rssHref = getAssetPath("rss.xml");
       </div>
     </div>
 
-    <Header />
+    {showHeader && <Header />}
 
     {breadcrumb && <Breadcrumb />}
 

@@ -12,7 +12,6 @@ import {
   toCoverTransitionName,
 } from "@/utils/toTransitionName";
 import EditPost from "./_components/EditPost.astro";
-import BackButton from "./_components/BackButton.astro";
 import BackToTopButton from "./_components/BackToTopButton.astro";
 import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import Toc from "./_components/Toc.astro";
@@ -109,14 +108,9 @@ const wordCount = countWords(post.body);
   pubDatetime={pubDatetime}
   modDatetime={modDatetime}
 >
-  <BackButton />
-
   <main
     id="main-content"
-    class:list={[
-      "app-layout post-reading-page",
-      { "mt-8": !config.features.showBackButton },
-    ]}
+    class="app-layout post-reading-page mt-8"
     data-reading-page
     data-pagefind-body
   >
